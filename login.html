@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Simple Login Page</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    /* Simple CSS styling */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background: #f2f2f2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .login-container {
+      background: #fff;
+      padding: 40px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+    .login-container h2 {
+      margin-bottom: 20px;
+    }
+    .login-button {
+      background-color: #4285F4;
+      color: #fff;
+      border: none;
+      padding: 12px 24px;
+      font-size: 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .login-button:hover {
+      background-color: #357ae8;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="login-container">
+    <h2>Login Page</h2>
+    <button id="google-login" class="login-button">Login with Google</button>
+  </div>
+
+  <!-- Firebase App (the core Firebase SDK) -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+  <!-- Firebase Authentication -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
+
+  <script>
+    // Your web app's Firebase configuration (replace these with your project's values)
+    const firebaseConfig = {
+     apiKey: "AIzaSyDxqFLD8duOgFwofRYkzPfy0NEbbXxuWU8",
+     authDomain: "booklet01-94904.firebaseapp.com",
+     projectId: "booklet01-94904",
+     storageBucket: "booklet01-94904.firebasestorage.app",
+     messagingSenderId: "452407070385",
+     appId: "1:452407070385:web:897ce2a38b4c4fa4865c90",
+     measurementId: "G-R6BLXG2QG7"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+
+    // Initialize Firebase Authentication and get a reference to the service
+    const auth = firebase.auth();
+
+    // Set up Google as the auth provider
+    const provider = new firebase.auth.GoogleAuthProvider();
+
+    // Attach click event listener to the login button
+    document.getElementById('google-login').addEventListener('click', () => {
+      auth.signInWithPopup(provider)
+        .then((result) => {
+          // Google Access Token (if needed)
+          const token = result.credential.accessToken;
+          // Signed-in user info
+          const user = result.user;
+          console.log('User Info:', user);
+          alert('Welcome, ' + user.displayName + '!');
+          // You can redirect the user or perform other actions here.
+        })
+        .catch((error) => {
+          // Handle Errors here.
+          console.error('Error during sign in:', error);
+          alert('Error: ' + error.message);
+        });
+    });
+  </script>
+</body>
+</html>
